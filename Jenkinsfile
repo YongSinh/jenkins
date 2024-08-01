@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { 
         git_repo = 'https://github.com/SalaCyber/employee-api.git'
-        digital_ocean ='dop_v1_be94922de18cf588efb3b32d217ab39edf8260b91a13ea0d1c8d5fe875df55ed'
+        digital_ocean ='dop_v1_4427c1107c962366d0a6ba8c79a763db732347280d80d9c728a4a6290c3037b0'
     }
     parameters {
 
@@ -25,7 +25,7 @@ pipeline {
                  sh'''
                     cd employee-api
                     docker build . -t registry.digitalocean.com/jenkins-server:${APP_ENV}${BUILD_NUMBER}
-                    docker login -u ${digital_ocean} -p  ${digital_ocean} registry.digitalocean.com
+                    docker login registry.digitalocean.com -u ${digital_ocean} -p ${digital_ocean} 
                     docker push  registry.digitalocean.com/jenkins-server:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
