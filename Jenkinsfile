@@ -25,7 +25,7 @@ pipeline {
                     cd employee-api
                     docker build . -t jenkins-server/employee-api:${APP_ENV}${BUILD_NUMBER}
                     snap install doctl
-                    doctl auth init --access-token dop_v1_4e0f151429c60a6b7b26e9eb44d771bf0666bd84a4326f4d7cb7d22eefbb5708
+                    doctl auth init --access-token dop_v1_d72094a51a2d3c8f7161b90ca3b539f62857b685446e32b581742ec537d259eb
                     doctl registry login
                     docker tag jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER} registry.digitalocean.com/jenkins-server/jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER}
                     docker push  registry.digitalocean.com/jenkins-server/jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER}
