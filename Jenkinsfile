@@ -25,7 +25,7 @@ pipeline {
                  sh'''
                     cd employee-api
                     docker build . -t registry.digitalocean.com/jenkins-server:${APP_ENV}${BUILD_NUMBER}
-                    docker login registry.digitalocean.com -u ${digital_ocean} -p ${digital_ocean} 
+                    docker login registry.digitalocean.com -u dop_v1_011eee63881aa66be55ca252ad73ab907a4a78ca1183113d301cbf33ffe159f1 -p dop_v1_011eee63881aa66be55ca252ad73ab907a4a78ca1183113d301cbf33ffe159f1
                     docker push  registry.digitalocean.com/jenkins-server:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
