@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { 
         git_repo = 'https://github.com/SalaCyber/employee-api.git'
-        digital_ocean ='dop_v1_135a8b85a6acbe7226a0f5b51a7f04f7638a7b77771860f1620a18bb14f31c42'
+        digital_ocean ="dop_v1_aa34ee4697ad3c9f5e09ca06a5c97322ae3f2449bfd799bb534cbaf1579eb8b1"
     }
     parameters {
 
