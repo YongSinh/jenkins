@@ -15,6 +15,7 @@ pipeline {
                 sh'''
                     rm -rf employee-api
                     git clone ${git_repo}
+                    pwd
                 '''
             }
         }
@@ -22,10 +23,7 @@ pipeline {
             steps {
                  sh'''
                     cd employee-api
-                    docker build . -t jenkins-server/employee-api:${APP_ENV}${BUILD_NUMBER}
-                    doctl registry login
-                    docker tag jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER} registry.digitalocean.com/jenkins-server/jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER}
-                    docker push  registry.digitalocean.com/jenkins-server/jenkins-server/employee-api:${APP_ENV}-${BUILD_NUMBER}
+                    docker ps 
                 '''
             }
         }
