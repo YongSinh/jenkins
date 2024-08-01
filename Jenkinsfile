@@ -3,7 +3,7 @@ pipeline {
     environment { 
         git_repo = 'https://github.com/SalaCyber/employee-api.git'
         registry_url="registry.digitalocean.com/jenkins-server"
-        digitalocean_token ="dop_v1_cf007382e7ccf1b095e457897991cdfc54e48ca4e8d3a90ed085dbefb3e5b41a"
+        digitalocean_token ="dop_v1_69dd7da00c3632c9a91986170bf3473573b7e24b68044b646f33d13108f5ba61"
     }
     parameters {
 
