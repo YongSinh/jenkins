@@ -30,11 +30,11 @@ pipeline {
         stage('Build') {
             steps {
                  sh'''
-                    docker login --username yongsinh59312 --password-stdin < password.txt
                     cd employee-api
                     docker build . -t ${registry_url}:${APP_ENV}${BUILD_NUMBER}
                     touch password.txt
                     echo '017373988$in@H' > password.txt
+                    docker login --username yongsinh59312 --password-stdin < password.txt
                     docker push  ${registry_url}:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
