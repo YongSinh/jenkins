@@ -20,7 +20,7 @@ pipeline {
                 sh'''
                     rm -rf employee-api password.txt
                     touch password.txt
-                    echo "017373988$in@H" > password.txt
+                    echo '017373988$in@H' > password.txt
                     cat password.txt
                     git clone ${git_repo}
                     pwd
