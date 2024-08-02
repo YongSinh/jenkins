@@ -57,31 +57,31 @@ pipeline {
                     curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
                     -d chat_id=${CHAT_ID} \
                     -d parse_mode="HTML" \
-                    -d text="<b>Stage</b>: Deploy employee on service employee-api<br>\
-                    <b>Status</b>: SUCCESS<br>\
-                    <b>Version</b>: uat-23<br>\
-                    <b>Environment</b>: uat<br>\
-                    <b>Application URL</b>: https://app.sothy.cloud<br>\
-                    <b>User Build</b>: Salacyber DevOps<br>\
-                    <b>Release Note</b>: Some Release Noted"
-                    -d disable_notification=false
+                    -d text="<b>Stage</b>: Deploy employee on service employee-api \
+                    %0A<b>Status</b>: ${BUILD_USER} \
+                    %0A<b>Status</b>: SUCCESS \
+                    %0A<b>Version</b>: ${APP_ENV}-${BUILD_NUMBER} \
+                    %0A<b>Environment</b>: ${APP_ENV}\
+                    %0A<b>Application URL</b>: ${docker_hub_registry}\
+                    %0A<b>User Build</b>: Salacyber DevOps \
+                    %0A<b>Release Note</b>: Some Release Noted"
                 """
             }
         }
         failure {
             script {
                 sh """
-                    curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
+                     curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
                     -d chat_id=${CHAT_ID} \
                     -d parse_mode="HTML" \
-                    -d text="<b>Stage</b>: Deploy employee on service employee-api<br>\
-                    <b>Status</b>: FAILED<br>\
-                    <b>Version</b>: uat-23<br>\
-                    <b>Environment</b>: uat<br>\
-                    <b>Application URL</b>: https://app.sothy.cloud<br>\
-                    <b>User Build</b>: Salacyber DevOps<br>\
-                    <b>Release Note</b>: Some Release Noted"
-                    -d disable_notification=false
+                    -d text="<b>Stage</b>: Deploy employee on service employee-api \
+                    %0A<b>Status</b>: ${BUILD_USER} \
+                    %0A<b>Status</b>: FAILED \
+                    %0A<b>Version</b>: ${APP_ENV}-${BUILD_NUMBER} \
+                    %0A<b>Environment</b>: ${APP_ENV}\
+                    %0A<b>Application URL</b>: ${docker_hub_registry}\
+                    %0A<b>User Build</b>: Salacyber DevOps \
+                    %0A<b>Release Note</b>: Some Release Noted"
                 """
             }
         }
