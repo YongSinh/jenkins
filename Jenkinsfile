@@ -11,13 +11,13 @@ pipeline {
         CHAT_ID = credentials('Telegram_ChatID')
     }
     parameters {
-        text(name: 'ReleaseNote', defaultValue: 'Hello', description: 'Enter some information about the person')
-        choice(name: 'APP_ENV', choices: ['unt', 'preparerod', 'prod'], description: 'Pick something')
+        text(name: 'ReleaseNote', defaultValue: 'Hello', description: 'Enter some information about the release')
+        choice(name: 'APP_ENV', choices: ['unt', 'preparerod', 'prod'], description: 'Pick the environment')
     }
     stages {
         stage('config') {
             steps {
-                sh'''
+                sh '''
                     rm -rf employee-api password.txt
                     touch password.txt
                     echo ${PASSWORD} > password.txt
@@ -29,24 +29,36 @@ pipeline {
         }
         stage('Build') {
             steps {
-                 sh'''                   
-                    docker login --username yongsinh59312 --password-stdin < password.txt
+                 sh '''                   
+                    cat password.txt | docker login --username yongsinh59312 --password-stdin
                     cd employee-api
                     docker build . -t ${docker_hub_registry}:${APP_ENV}${BUILD_NUMBER}
-                    docker push  ${docker_hub_registry}:${APP_ENV}${BUILD_NUMBER}
+                    docker push ${docker_hub_registry}:${APP_ENV}${BUILD_NUMBER}
                 '''
             }
         }
         stage('Test') {
             steps {
-               sh'''                   
-                    docker login -u ${digitalocean_token} -p ${digitalocean_token} registry.digitalocean.com
+               sh '''                   
+                    echo ${digitalocean_token} | docker login -u ${digitalocean_token} --password-stdin ${registry_url}
                 '''
             }
         }
-        post {
-            always {
-                echo 'I will always say Hello again!'
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                sh "curl -X POST -H \"Content-Type: application/json\" -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline succeeded!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
+            }
+        }
+        failure {
+            script {
+                sh "curl -X POST -H \"Content-Type: application/json\" -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline failed!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
             }
         }
     }
