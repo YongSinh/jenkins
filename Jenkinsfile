@@ -18,10 +18,10 @@ pipeline {
         stage('config') {
             steps {
                 sh'''
+                    rm -rf employee-api password.txt
                     touch password.txt
-                    echo "017373988$in@H" >> password.txt
+                    echo "017373988$in@H" > password.txt
                     cat password.txt
-                    rm -rf employee-api
                     git clone ${git_repo}
                     pwd
                 '''
