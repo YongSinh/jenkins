@@ -6,6 +6,7 @@ pipeline {
         digitalocean_token ="dop_v1_69dd7da00c3632c9a91986170bf3473573b7e24b68044b646f33d13108f5ba61"
         docker_registry = credentials('docker_registry_pwd')
         PASSWORD = credentials('docker_registry_pwd')
+        DOCKER_USERNAME= 'yongsinh59312'
     }
     parameters {
 
@@ -17,8 +18,10 @@ pipeline {
         stage('config') {
             steps {
                 script {
-                    // Write the password to password.txt
-                    writeFile file: 'password.txt', text: "${env.PASSWORD}"
+                    withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'yongsinh59312')]) {
+                        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"   
+
+                    }
                 }
                 sh'''
                     cat password.txt
@@ -33,7 +36,6 @@ pipeline {
                  sh'''
                     cd employee-api
                     docker build . -t ${registry_url}:${APP_ENV}${BUILD_NUMBER}
-                    docker login --username yongsinh59312 --password-stdin < password.txt
                     docker push  ${registry_url}:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
