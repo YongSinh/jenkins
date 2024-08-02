@@ -53,12 +53,34 @@ pipeline {
     post {
         success {
             script {
-                sh "curl -X POST -H \"Content-Type: application/json\" -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline succeeded!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
+                sh """
+                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
+                -d chat_id=${CHAT_ID} \
+                -d parse_mode="HTML" \
+                -d text="<b>Stage</b>: Deploy employee on service employee-api<br>\
+                <b>Status</b>: SUCCESS<br>\
+                <b>Version</b>: uat-23<br>\
+                <b>Environment</b>: uat<br>\
+                <b>Application URL</b>: https://app.sothy.cloud<br>\
+                <b>User Build</b>: Salacyber DevOps<br>\
+                <b>Release Note</b>: Some Release Noted"
+                """
             }
         }
         failure {
             script {
-                sh "curl -X POST -H \"Content-Type: application/json\" -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline failed!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
+                sh """
+                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
+                -d chat_id=${CHAT_ID} \
+                -d parse_mode="HTML" \
+                -d text="<b>Stage</b>: Deploy employee on service employee-api<br>\
+                <b>Status</b>: FAILED<br>\
+                <b>Version</b>: uat-23<br>\
+                <b>Environment</b>: uat<br>\
+                <b>Application URL</b>: https://app.sothy.cloud<br>\
+                <b>User Build</b>: Salacyber DevOps<br>\
+                <b>Release Note</b>: Some Release Noted"
+                """
             }
         }
     }
