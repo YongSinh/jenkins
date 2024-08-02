@@ -20,7 +20,6 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'yongsinh59312')]) {
                         sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"   
-
                     }
                 }
                 sh'''
