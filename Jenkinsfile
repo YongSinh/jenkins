@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { 
         git_repo = 'https://github.com/SalaCyber/employee-api.git'
-        registry_url="yongsinh59312/employee-api"
+        registry_url="registry.digitalocean.com/jenkins-server"
         digitalocean_token = credentials('digitalocean_token')
         docker_registry = credentials('docker_registry_pwd')
         PASSWORD = credentials('docker_registry_pwd')
@@ -29,7 +29,7 @@ pipeline {
         stage('Build') {
             steps {
                  sh'''                   
-                    docker login --username yongsinh59312 --password-stdin < password.txt
+                    docker login -u ${digitalocean_token} -p ${digitalocean_token} registry.digitalocean.com
                     cd employee-api
                     docker build . -t ${registry_url}:${APP_ENV}${BUILD_NUMBER}
                     docker push  ${registry_url}:${APP_ENV}${BUILD_NUMBER}
@@ -39,7 +39,7 @@ pipeline {
         stage('Test') {
             steps {
                sh'''                   
-                     docker login -u ${digitalocean_token} -p ${digitalocean_token} registry.digitalocean.com
+                    docker login --username yongsinh59312 --password-stdin < password.txt
                 '''
             }
         }
