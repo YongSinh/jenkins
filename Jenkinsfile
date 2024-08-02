@@ -64,6 +64,7 @@ pipeline {
                     <b>Application URL</b>: https://app.sothy.cloud<br>\
                     <b>User Build</b>: Salacyber DevOps<br>\
                     <b>Release Note</b>: Some Release Noted"
+                    -d disable_notification=false
                 """
             }
         }
@@ -80,6 +81,7 @@ pipeline {
                     <b>Application URL</b>: https://app.sothy.cloud<br>\
                     <b>User Build</b>: Salacyber DevOps<br>\
                     <b>Release Note</b>: Some Release Noted"
+                    -d disable_notification=false
                 """
             }
         }
