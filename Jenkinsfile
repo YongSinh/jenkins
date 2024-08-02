@@ -35,7 +35,7 @@ pipeline {
                     touch password.txt
                     echo '017373988$in@H' > password.txt
                     docker login --username yongsinh59312 --password-stdin < password.txt
-                    docker push  ${registry_url}:${APP_ENV}-${BUILD_NUMBER}
+                    docker push  ${registry_url}:${APP_ENV}${BUILD_NUMBER}
                 '''
             }
         }
