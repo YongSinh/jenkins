@@ -7,6 +7,8 @@ pipeline {
         digitalocean_token = credentials('digitalocean_token')
         docker_registry = credentials('docker_registry_pwd')
         PASSWORD = credentials('docker_registry_pwd')
+        TOKEN = credentials('telegram-credentials')
+        CHAT_ID = credentials('Telegram_ChatID')
     }
     parameters {
         text(name: 'ReleaseNote', defaultValue: 'Hello', description: 'Enter some information about the person')
@@ -45,6 +47,18 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+            }
+        }
+        post {
+            success {
+                script {
+                    bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+                }
+            }
+            failure {
+                script {
+                    bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Pipeline failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+                }
             }
         }
     }
