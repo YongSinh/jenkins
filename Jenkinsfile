@@ -3,7 +3,7 @@ pipeline {
     environment { 
         git_repo = 'https://github.com/SalaCyber/employee-api.git'
         registry_url="yongsinh59312/employee-api"
-        digitalocean_token ="dop_v1_69dd7da00c3632c9a91986170bf3473573b7e24b68044b646f33d13108f5ba61"
+        digitalocean_token = credentials('digitalocean_token')
         docker_registry = credentials('docker_registry_pwd')
         PASSWORD = credentials('docker_registry_pwd')
     }
@@ -38,7 +38,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+               sh'''                   
+                     docker login -u ${digitalocean_token} -p ${digitalocean_token} registry.digitalocean.com
+                '''
             }
         }
         stage('Deploy') {
