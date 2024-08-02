@@ -6,7 +6,6 @@ pipeline {
         digitalocean_token ="dop_v1_69dd7da00c3632c9a91986170bf3473573b7e24b68044b646f33d13108f5ba61"
         docker_registry = credentials('docker_registry_pwd')
         PASSWORD = credentials('docker_registry_pwd')
-        DOCKER_USERNAME= 'yongsinh59312'
     }
     parameters {
 
@@ -20,7 +19,7 @@ pipeline {
                 sh'''
                     rm -rf employee-api password.txt
                     touch password.txt
-                    echo '017373988$in@H' > password.txt
+                    echo ${PASSWORD} > password.txt
                     cat password.txt
                     git clone ${git_repo}
                     pwd
