@@ -17,12 +17,9 @@ pipeline {
     stages {
         stage('config') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'yongsinh59312')]) {
-                        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"   
-                    }
-                }
                 sh'''
+                    touch password.txt
+                    echo "017373988$in@H" >> password.txt
                     cat password.txt
                     rm -rf employee-api
                     git clone ${git_repo}
@@ -33,6 +30,7 @@ pipeline {
         stage('Build') {
             steps {
                  sh'''
+                    docker login --username yongsinh59312 --password-stdin < password.txt
                     cd employee-api
                     docker build . -t ${registry_url}:${APP_ENV}${BUILD_NUMBER}
                     docker push  ${registry_url}:${APP_ENV}-${BUILD_NUMBER}
