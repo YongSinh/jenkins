@@ -27,7 +27,7 @@ pipeline {
                  sh'''
                     cd employee-api
                     docker build . -t ${registry_url}:${APP_ENV}${BUILD_NUMBER}
-                    docker login -u yongsinh59312 -p ${docker_registry} 
+                    docker login -u yongsinh59312 -p 017373988$in@H
                     docker push  ${registry_url}:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
