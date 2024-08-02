@@ -8,9 +8,8 @@ pipeline {
         PASSWORD = credentials('docker_registry_pwd')
     }
     parameters {
-
-        text(name: 'Release note', defaultValue: 'Hello', description: 'Enter some information about the person')
-        choice(name: 'REGISTRY', choices: ['registry.digitalocean.com/jenkins-server', 'yongsinh59312/employee-api'], description: 'Pick something')
+        text(name: 'ReleaseNote', defaultValue: 'Hello', description: 'Enter some information about the person')
+        choice(name: 'REGISTRY', defaultValue: 'yongsinh59312/employee-api', choices: ['registry.digitalocean.com/jenkins-server', 'yongsinh59312/employee-api'], description: 'Pick something')
         choice(name: 'APP_ENV', choices: ['unt', 'preparerod', 'prod'], description: 'Pick something')
     }
     stages {
