@@ -44,9 +44,13 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy') {
+        stage('Deploy UAT') {
             steps {
-                echo 'Deploying....'
+                script {
+                    sh """
+                       ssh root@146.190.82.217
+                    """
+            }
             }
         }
     }
