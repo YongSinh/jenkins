@@ -48,7 +48,11 @@ pipeline {
             steps {
                 script {
                     sh """
-                       ssh root@146.190.82.217
+                       ssh root@146.190.82.217 "cd /srv;\
+                                                touch password.txt
+                                                echo ${PASSWORD} > password.txt
+                                                cat password.txt | docker login --username yongsinh59312 --password-stdin
+                                                docker compose up -d"
                     """
             }
             }
