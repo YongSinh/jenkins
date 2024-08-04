@@ -47,12 +47,12 @@ pipeline {
         stage('Deploy UAT') {
             steps {
                 script {
-                    sh """
-                       ssh root@146.190.82.217 "cd srv;\
+                    sh '''
+                       ssh root@146.190.82.217 'cd srv;\
                                                 touch password.txt
-                                                ${docker_registry} > password.txt"
-                    """
-            }
+                                                echo ${PASSWORD} > password.txt'
+                    '''
+                }
             }
         }
     }
