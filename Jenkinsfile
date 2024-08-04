@@ -46,14 +46,13 @@ pipeline {
         }
         stage('Deploy UAT') {
             steps {
+                script {
                     sh '''
                        ssh root@146.190.82.217 'cd srv;\
-                                                echo ${PASSWORD}
-                                                rm -rf password.txt
-                                                touch password.txt
-                                                echo '${PASSWORD}' > password.txt
-                                                cat password.txt | docker login --username yongsinh59312 --password-stdin'
+                                                cat password.txt | docker login --username yongsinh59312 --password-stdin
+                                                docker compose up -d'
                     '''
+                }
             }
         }
     }
