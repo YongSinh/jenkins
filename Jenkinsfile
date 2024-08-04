@@ -47,11 +47,17 @@ pipeline {
         stage('Deploy UAT') {
             steps {
                 script {
-                    sh '''
-                       ssh root@146.190.82.217 'cd srv;\
-                                                cat password.txt | docker login --username yongsinh59312 --password-stdin
-                                                docker compose up -d'
-                    '''
+                     def password = '${PASSWORD}'
+                    def escapedPassword = password.replace('$', '\\$').replace('`', '\\`')
+                     sh """
+                            ssh root@146.190.82.217 << 'EOF'
+                                cd srv
+                                rm -rf password.txt
+                                touch password.txt
+                                echo "${escapedPassword}" > password.txt
+                                cat password.txt | docker login --username yongsinh59312 --password-stdin
+                            EOF
+                        """
                 }
             }
         }
