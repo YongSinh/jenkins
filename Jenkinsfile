@@ -52,7 +52,7 @@ pipeline {
                                                 echo ${PASSWORD}
                                                 rm -rf password.txt
                                                 touch password.txt
-                                                echo ${PASSWORD} > password.txt
+                                                echo '${PASSWORD}' > password.txt
                                                 cat password.txt | docker login --username yongsinh59312 --password-stdin'
                     """
                 }
