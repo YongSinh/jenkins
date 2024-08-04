@@ -49,6 +49,7 @@ pipeline {
                 script {
                     sh '''
                        ssh root@146.190.82.217 'cd srv;\
+                                                echo ${PASSWORD}
                                                 rm -rf password.txt
                                                 touch password.txt
                                                 echo ${PASSWORD} > password.txt
