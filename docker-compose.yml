@@ -1,7 +1,7 @@
 version: '3'
 services:
   employee-api:
-    container_name: employee-api
+    container_name: employee-api2
     image: yongsinh59312/employee-api:unt42
     ports:
       -"4000:4000"
