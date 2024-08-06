@@ -48,8 +48,10 @@ pipeline {
                 script {
                     sh '''
                        ssh root@146.190.82.217 "cd srv;\
-                                                cat password.txt | docker login --username yongsinh59312 --password-stdin
-                                                docker compose up -d"
+                                                cat password.txt | docker login --username yongsinh59312 --password-stdin;\
+                                                sed -i 's/1/${APP_ENV}-${BUILD_NUMBER}/g' .env;\
+                                                docker compose up -d --build;\
+                                                sed -i 's/${APP_ENV}-${BUILD_NUMBER}/1/g' .env"
                     '''
                 }
             }
