@@ -23,7 +23,6 @@ pipeline {
                     echo ${PASSWORD} > password.txt
                     cat password.txt
                     git clone ${git_repo}
-                    pwd
                 '''
             }
         }
