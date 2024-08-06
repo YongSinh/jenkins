@@ -31,8 +31,8 @@ pipeline {
                  sh '''                   
                     cat password.txt | docker login --username yongsinh59312 --password-stdin
                     cd employee-api
-                    docker build . -t ${docker_hub_registry}:${APP_ENV}${BUILD_NUMBER}
-                    docker push ${docker_hub_registry}:${APP_ENV}${BUILD_NUMBER}
+                    docker build . -t ${docker_hub_registry}:${APP_ENV}-${BUILD_NUMBER}
+                    docker push ${docker_hub_registry}:${APP_ENV}-${BUILD_NUMBER}
                 '''
             }
         }
